@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 
 @Controller
 public class MainController {
-    Logger logger = Logger.getLogger(MainController.class.getName());
+    Logger logger = Logger.getLogger(MainController.class.getName()); //Creating logger for actual class
 
-    @Autowired
+    @Autowired //Create object automatically
     ClientRepository clientRepository;
 
     @GetMapping("/")
@@ -28,6 +28,16 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/signup")
+    public String signup() {
+        return "signup";
+    }
+
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact";
+    }
+
     @GetMapping("/manageBooking")
     public String manageBooking() {
         // codigo java
@@ -35,8 +45,8 @@ public class MainController {
     }
 
     @PostMapping("/dologin")
-    public String doLogin(@ModelAttribute Client client, Model model){
-        logger.info("Client: " + client);
+    public String doLogin(@ModelAttribute Client client, Model model){ //To call data from view
+        logger.info("Client: " + client); //To print info messages
         return "index";
     }
 
