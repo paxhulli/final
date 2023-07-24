@@ -12,17 +12,14 @@ import lombok.*;
 @Getter                 //Create Getters
 @ToString               //Create toString
 @Entity //Entity class that uses database
-@Table(name = "clients") //Table that will be using
-public class Client {
-    @Id //Primary key
+@Table(name = "service") //Table that will be using
+public class Service {
+    @Id // Primary Key
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY) //Type of value(auto-increment)
-    private int idClients;
-    private String firstName;
-    private String lastName;
-    private String mobileNumber;
-    private String email;
-    private String password;
-    private String license;
-    private int profile;
-
+    private int idService;
+    private int serviceTypeIdServiceType;
+    private String vehiclesRegistrationNumber;
+    private int date;
+    private int staffIdStaff;
+    private int statusIdStatus;
 }

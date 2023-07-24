@@ -21,22 +21,22 @@ public class MainController {
     @GetMapping("/")
     public String index() {
         return "index";
-    }
+    }//Link to index
 
     @GetMapping("/login")
     public String login() {
         return "login";
-    }
+    }//Link to Log In Section
 
     @GetMapping("/signup")
     public String signup() {
         return "signup";
-    }
+    } // Link to Sign Up Section
 
     @GetMapping("/contact")
     public String contact() {
         return "contact";
-    }
+    } // Link to Contact Section
 
     @GetMapping("/manageBooking")
     public String manageBooking() {

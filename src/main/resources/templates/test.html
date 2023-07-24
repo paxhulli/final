@@ -19,13 +19,13 @@
     </tr>
 <th:block th:each="client : ${clients}">
     <tr>
-        <td th:text="${client.getIdclients()}" ></td>
+        <td th:text="${client.getIdClients()}" ></td>
         <td th:text="${client.getFirstName()}" ></td>
         <td th:text="${client.getLastName()}" ></td>
         <td th:text="${client.getMobileNumber()}" ></td>
         <td th:text="${client.getEmail()}" ></td>
         <td th:text="${client.getPassword()}" ></td>
-        <td th:text="${client.getLicence()}" ></td>
+        <td th:text="${client.getLicense()}" ></td>
         <td th:text="${client.getProfile()}" ></td>
     </tr>
 </th:block>
