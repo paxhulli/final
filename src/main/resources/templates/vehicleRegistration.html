@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form action="/doVehicleReg" method="POST" >
+
+  <h2>Vehicle Details</h2>
+  <div class="mb-3 mt-3">
+    <label for="make" class="form-label">Make (select one):</label>
+    <select class="form-select" id="make" name="make">
+      <th:block th:each="make : ${makes}">
+        <option th:value="${make.getIdMake()}" th:text="${make.getName()}"></option>
+      </th:block>
+
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="other">Other:</label>
+    <input type="text" class="form-control" id="other" placeholder="Enter Make" name="other">
+  </div>
+  <div class="mb-3">
+    <label for="model">Model:</label>
+    <input type="text" class="form-control" id="model" placeholder="Enter Model" name="model">
+  </div>
+  <div class="mb-3">
+    <label for="year">Year:</label>
+    <input type="text" class="form-control" id="year" placeholder="Enter Year" name="year">
+  </div>
+  <div class="mb-3 mt-3">
+    <label for="engineType" class="form-label">Engine Type (select one):</label>
+    <select class="text" id="engineType" name="engineType">
+      <th:block th:each="engineType : ${engineTypes}">
+        <option  th:value="${engineType.getIdEngineType()}" th:text="${engineType.getType()}"></option>
+      </th:block>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="registrationNumber">Registration Number:</label>
+    <input type="text" class="form-control" id="registrationNumber" placeholder="Enter Registration Number" name="registrationNumber">
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>

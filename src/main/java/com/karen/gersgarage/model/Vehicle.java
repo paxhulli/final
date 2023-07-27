@@ -1,8 +1,7 @@
 package com.karen.gersgarage.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.annotation.Generated;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor      //Create empty constructor
@@ -15,7 +14,6 @@ import lombok.*;
 
 public class Vehicle {
     @Id//Primary Key
-    //Type of PK
     private String registrationNumber;
     private String model;
     private int year;

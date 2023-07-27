@@ -29,6 +29,15 @@
         <td th:text="${client.getProfile()}" ></td>
     </tr>
 </th:block>
+
+    <th:block th:each="vehicle : ${vehicles}">
+
+        <p th:text="${vehicle.getRegistrationNumber()}"></p>
+        <p th:text="${vehicle.getEngineTypeIdEngineType()}"></p>
+        <p th:text="${vehicle.getMakeIdMake()}"></p>
+        <p th:text="${vehicle.getModel()}"></p>
+        <p th:text="${vehicle.getYear()}"></p>
+    </th:block>
 </table>
 </body>
 </html>
