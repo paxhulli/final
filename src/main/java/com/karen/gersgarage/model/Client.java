@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.springframework.context.annotation.Scope;
 
 @NoArgsConstructor      //Create empty constructor
 @AllArgsConstructor     //Create constructors
@@ -13,6 +14,7 @@ import lombok.*;
 @ToString               //Create toString
 @Entity //Entity class that uses database
 @Table(name = "clients") //Table that will be using
+@Scope(value = "session")
 public class Client {
     @Id //Primary key
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY) //Type of value(auto-increment)

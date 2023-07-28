@@ -38,6 +38,13 @@
         <p th:text="${vehicle.getModel()}"></p>
         <p th:text="${vehicle.getYear()}"></p>
     </th:block>
+
+    <h3>client vehicles</h3>
+    <th:block th:each="vehicle : ${client2Vehicles}">
+
+        <p th:text="${vehicle }"></p>
+
+    </th:block>
 </table>
 </body>
 </html>
