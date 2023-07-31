@@ -1,19 +1,17 @@
 package com.karen.gersgarage.view;
 
-import com.karen.gersgarage.model.Client;
-import com.karen.gersgarage.model.HasVehicle;
-import com.karen.gersgarage.model.RegisterVehicle;
-import com.karen.gersgarage.model.Vehicle;
+import com.karen.gersgarage.model.*;
 import com.karen.gersgarage.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -23,7 +21,7 @@ public class MainController {
 
     @Autowired //Create object automatically
     ClientRepository clientRepository;
-    Client user ;
+    Client user;
     @Autowired
     VehicleRepository vehicleRepository;
 
@@ -35,6 +33,12 @@ public class MainController {
 
     @Autowired
     HasVehicleRepository hasVehicleRepository;
+
+    @Autowired
+    ServiceTypeRepository serviceTypeRepository;
+
+    @Autowired
+    ServiceRepository serviceRepository;
 
     public MainController() {
 
@@ -80,7 +84,7 @@ public class MainController {
 
         model.addAttribute("clients", clientRepository.findAll());
         model.addAttribute("vehicles", vehicleRepository.findAll());
-        model.addAttribute("client2Vehicles",hasVehicleRepository.findByClientsIdClients(2));
+        model.addAttribute("client2Vehicles", hasVehicleRepository.findByClientsIdClients(2));
         return "test";
     }
 
@@ -104,6 +108,37 @@ public class MainController {
         return "vehicleRegResult";
     }
 
+    @GetMapping("/booking")
+    public String startBooking(Model model) {
+        model.addAttribute("user", user);
+        List<String> hours = new ArrayList<>();
+        for (int i = 9; i < 14; i++) {
+            hours.add(String.format("%02d", i));
+        }
+        model.addAttribute("hours", hours);
+        model.addAttribute("serviceTypes", serviceTypeRepository.findAll());
+        List<HasVehicle> userVehicles = hasVehicleRepository.findByClientsIdClients(user.getIdClients());
+        ArrayList<String> idsUserVehicles = new ArrayList<>();
+        for (HasVehicle hv : userVehicles) {
+            idsUserVehicles.add(hv.getVehiclesRegistrationNumber());
+        }
+        logger.info("idsUserVehicles: " + idsUserVehicles);
+        model.addAttribute("vehicles", vehicleRepository.findAllById(idsUserVehicles));
+        return "booking";
+    }
 
+    @PostMapping(path = "/dobookservice", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String doBookService(@RequestParam String idClients,
+                                @RequestParam String registrationNumber,
+                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day,
+                                @RequestParam Integer time,
+                                @RequestParam Integer service,
+                                @RequestParam String extraNotes, Model model) {
+        Service newService = new Service(0,service,registrationNumber,day,time,0,1,extraNotes);
+        logger.info("En doBookService...." + newService);
+        Service savedService =  serviceRepository.save(newService);
+        model.addAttribute("newService", newService);
+        return "bookingresult";
+    }
 
 }

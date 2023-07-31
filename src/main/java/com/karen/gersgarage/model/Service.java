@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor      //Create empty constructor
 @AllArgsConstructor     //Create constructors
 @Setter                 //Create setters
@@ -19,7 +21,9 @@ public class Service {
     private int idService;
     private int serviceTypeIdServiceType;
     private String vehiclesRegistrationNumber;
-    private int date;
+    private LocalDate date;
+    private int time;
     private int staffIdStaff;
     private int statusIdStatus;
+    private String extraNotes;
 }

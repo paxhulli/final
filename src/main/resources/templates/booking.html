@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- Jquery Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Para hacer que el campo de fecha no permita seleccionar los domingos -->
+  <script>
+        $(function(){
+            $('#day').on('change', function(){
+                var day = new Date($(this).val()).getDay();
+                //console.log(day);
+                // Si el día es domingo (6), limpiar el campo de fecha y mostrar un mensaje de error
+                if(day === 6){
+                    $(this).val('');
+                    alert('No se puede seleccionar el domingo!');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<form action="#" th:action="@{/dobookservice}" method="post">
+  <input type="text" th:name="idClients" th:value="${user.getIdClients()}" readonly="readonly" />
+
+  <label for="registrationNumber">Número de Registro:</label>
+  <select id="registrationNumber" th:name="registrationNumber" required>
+    <option th:each="vehicle : ${vehicles}" th:value="${vehicle.getRegistrationNumber()}" th:text="${vehicle.registrationNumber + ' ' +vehicle.model}"></option>
+  </select>
+
+  <label for="day">Día:</label>
+  <input type="date" id="day" th:name="day" required />
+
+  <label for="time">Hora:</label>
+  <select id="time" th:name="time" required>
+    <option th:each="hour : ${hours}" th:value="${hour}" th:text="${hour}"></option>
+  </select>
+
+  <label for="service">Servicio:</label>
+  <select id="service" th:name="service" required>
+    <th:block th:each="service : ${serviceTypes}">
+      <option th:value="${service.getIdServiceType()}" th:text="${service.getName()}"></option>
+
+    </th:block>
+  </select>
+
+  <label for="extraNotes">Notas Extra:</label>
+  <textarea id="extraNotes" th:name="extraNotes" rows="5" cols="30"></textarea>
+
+  <button type="submit">Enviar</button>
+</form>
+
+</body>
+</html>
