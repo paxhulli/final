@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head_bootstrap">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="template :: header"></header>
+<div class="container mt-3">
+   <div class="row">
+       <div class="col col-4">
+           <form action="/doAddItem" method="POST">
+               <div class="mb-3">
+                   <label for="name">Name:</label>
+                   <input type="text" class="form-control" id="name" placeholder="Enter item name" name="name">
+               </div>
+               <div class="mb-3">
+                   <label for="description">Description:</label>
+                   <input type="text" class="form-control" id="description" placeholder="Enter description" name="description">
+               </div>
+               <div class="mb-3">
+                   <label for="price">Price:</label>
+                   <input type="text" class="form-control" id="price" placeholder="Enter Price" name="price">
+               </div>
+               <div class="mb-3">
+                   <label for="stock">Stock:</label>
+                   <input type="text" class="form-control" id="stock" placeholder="Enter number of items in stock"
+                          name="stock">
+               </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+           </form>
+       </div>
+       <div class="col col-4"></div>
+       <div class="col col-4"></div>
+   </div>
+
+</div>
+<div th:replace="template :: footer"></div>
+</body>
+</html>

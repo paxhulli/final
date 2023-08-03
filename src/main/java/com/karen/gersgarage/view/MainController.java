@@ -40,6 +40,9 @@ public class MainController {
     @Autowired
     ServiceRepository serviceRepository;
 
+    @Autowired
+    ItemPartRepository itemPartRepository;
+
     public MainController() {
 
     }
@@ -145,6 +148,18 @@ public class MainController {
         Service savedService =  serviceRepository.save(newService);
         model.addAttribute("newService", newService);
         return "bookingresult";
+    }
+
+    @GetMapping("/manageItems")
+    public String manageItems(Model model){
+        model.addAttribute("items", itemPartRepository.findAll());
+        return "manageItems";
+    }
+
+    @GetMapping("/addItem")
+    public String addItem(Model model){
+
+        return "addItem";
     }
 
 }

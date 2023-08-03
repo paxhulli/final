@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head_bootstrap">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="template :: header">
+
+</header>
+
+<div class="container">
+    <h1>Items Management</h1>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <th:block th:each="item : ${items}">
+            <th scope="row" th:text="${item.getIdItemsParts()}"></th>
+            <td th:text="${item.getName()}"></td>
+            <td th:text="${item.getDescription()}"></td>
+            <td th:text="${item.getPrice()}"></td>
+            <td th:text="${item.getStock()}"></td>
+            <td>
+                <button type="button" class="btn btn-primary"><i class="bi bi-pencil-square"></i>update</button>
+                <button type="button" class="btn btn-danger"><i class="bi bi-x-square">delete</i></button>
+            </td>
+
+            </tr>
+        </th:block>
+
+
+        </tbody>
+    </table>
+
+    <form action="/addItem"   method="GET">
+        <input th:type="submit">Add Item</submit>
+    </form>
+        <button  type="button" class="btn btn-success"><i class="bi bi-cloud-plus"></i> Add item</button>
+
+
+</div>
+
+
+<div th:replace="template :: footer">
+</div>
+</body>
+</html>
