@@ -109,7 +109,7 @@ public class MainController {
     public String doVehicleReg(@ModelAttribute RegisterVehicle vehicleForm, @ModelAttribute Client client, Model model) {
         //logger.info("En doVehicleReg....");
         //logger.info("Formulario: " + vehicleForm); //To print info messages
-        Vehicle saved = vehicleRepository.save(vehicleForm.getVehicle());
+        Vehicle saved = vehicleRepository.save(vehicleForm.getVehicle()); //Save info from form
         //logger.info("result:" + saved);
         logger.info("user: " + user.toString());
         hasVehicleRepository.save(new HasVehicle(saved.getRegistrationNumber(), user.getIdClients()));
@@ -160,6 +160,17 @@ public class MainController {
     public String addItem(Model model){
 
         return "addItem";
+    }
+
+
+    @PostMapping(path = "/doAddItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String doAddItem(@ModelAttribute ItemPart itemForm, Model model) {
+        logger.info("En doAddItem....");
+        logger.info("Formulario: " + itemForm); //To print info messages
+        ItemPart saved = itemPartRepository.save(itemForm); //Save info from form
+        logger.info("result:" + saved);
+        model.addAttribute("saved", saved);
+        return "addItemResult";
     }
 
 }

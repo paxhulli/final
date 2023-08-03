@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head_bootstrap">
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+
+<body>
+
+<header th:replace="template :: header">
+
+</header>
+
+<div class="container mt-5">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card" style="width: 18rem;">
+        <img src="https://cdn-icons-png.flaticon.com/512/5290/5290058.png"
+             class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Item Registered.</h5>
+          <p>Item has been registered with the following details:</p>
+          <p><b>Name:</b></p>
+          <p th:text="${saved['name']}"></p>
+          <p><b>Description:</b></p>
+          <p th:text="${saved['description']}"></p>
+          <p><b>Price:</b></p>
+          <p th:text="${saved['price']}"></p>
+          <p><b>Stock:</b></p>
+          <p th:text="${saved['stock']}"></p>
+
+
+          <a href="/manageItems" class="btn btn-primary">Go to Manage Items</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div th:replace="template :: footer">
+
+</div>
+
+</body>
+</html>
