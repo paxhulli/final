@@ -8,14 +8,35 @@
 
 <body>
 
-<header  th:replace="template :: header">
+<header th:replace="template :: header">
 
 </header>
 
-<h1>Car Registered.</h1>
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <img src="https://res.cloudinary.com/yourmechanic/image/upload/dpr_auto,f_auto,q_auto/v1/article_images/Image1_HowtoResgisterYourCar_Filling_out_vehicle_registration_forms"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Car Registered</h5>
+                    <p>Your car has been registered with the following details:</p>
+                    <p><b>Registration Number:</b></p>
+                    <p th:text="${saved['registrationNumber']}"></p>
+                    <p><b>Model:</b></p>
+                    <p th:text="${saved['model']}"></p>
+                    <p><b>Year:</b></p>
+                    <p th:text="${saved['year']}"></p>
 
 
-<p th:text="${saved}"></p>
+                    <a href="/" class="btn btn-primary">Go Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div th:replace="template :: footer">
 

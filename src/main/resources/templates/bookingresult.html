@@ -17,8 +17,15 @@
                 <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/schedule-3447430-2882115.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Thanks for booking your Car!</h5>
-                    <p>Tu cita quedó registrada con los siguientes datos</p>
+                    <p>Your service has been registered with the following details:</p>
+                    <p><b>Registration Number:</b></p>
+                    <p th:text="${newService['vehiclesRegistrationNumber']}"></p>
+                    <p><b>Day:</b></p>
                     <p th:text="${newService['date']}"></p>
+                    <p><b>Time:</b></p>
+                    <p th:text="${newService['time']}"></p>
+                    <p><b>Extra notes:</b></p>
+                    <p th:text="${newService['extraNotes']}"></p>
 
                     <a href="/" class="btn btn-primary">Go Home</a>
                 </div>
