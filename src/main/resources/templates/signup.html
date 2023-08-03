@@ -1,83 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template :: head_bootstrap">
     <title>Sign Up Form</title>
     <meta charset="utf-8">
 </head>
-<body style="background-color:#1c87c9;">
+<body>
+<header  th:replace="template :: header">
 
-<div class="container mt-3">
+</header>
+
+<div class="container">
     <h2>Sign Up</h2>
     <form action="#">
         <h2>Personal Details</h2>
-        <div class="mb-3 mt-3">
+        <div class="mb-6">
             <label for="firstName">First Name:</label>
             <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" name="firstName">
         </div>
-        <div class="mb-3">
+        <div class="mb-6">
             <label for="lastName">Last Name:</label>
             <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" name="lastName">
         </div>
-        <div class="mb-3">
+        <div class="mb-6">
             <label for="phone">Phone:</label>
             <input type="text" class="form-control" id="phone" placeholder="Enter Phone" name="phone">
         </div>
-        <div class="mb-3">
+        <div class="mb-6">
             <label for="email">Email:</label>
             <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email">
         </div>
-        <div class="mb-3">
+
+        <div class="mb-6">
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
         </div>
-        <div class="mb-3">
+        <div class="mb-6">
             <label for="confirmPassword">Confirm Password:</label>
             <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
         </div>
-        <div class="mb-3">
+        <div class="mb-6">
             <label for="license">License:</label>
             <input type="text" class="form-control" id="license" placeholder="Enter License" name="license">
         </div>
-        <br>
-        <h2>Vehicle Details</h2>
-        <div class="mb-3 mt-3">
-            <label for="make" class="form-label">Make (select one):</label>
-            <select class="form-select" id="make" name="make">
-                <option>Audi</option>
-                <option>Fiat</option>
-                <option>Honda</option>
-                <option>Other</option>
-            </select>
-        </div>
-        <div class="mb-3">
-                <label for="other">Other:</label>
-                <input type="text" class="form-control" id="other" placeholder="Enter Make" name="other">
-        </div>
-        <div class="mb-3">
-            <label for="model">Model:</label>
-            <input type="text" class="form-control" id="model" placeholder="Enter Model" name="model">
-        </div>
-        <div class="mb-3">
-            <label for="year">Year:</label>
-            <input type="text" class="form-control" id="year" placeholder="Enter Year" name="year">
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="engineType" class="form-label">Engine Type (select one):</label>
-            <select class="text" id="engineType" name="engineType">
-                <option>Petrol</option>
-                <option>Diesel</option>
-                <option>Hybrid</option>
-                <option>Electric</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="registrationNumber">Registration Number:</label>
-            <input type="text" class="form-control" id="registrationNumber" placeholder="Enter Registration Number" name="registrationNumber">
-        </div>
-
-
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+</div>
+
+<div th:replace="template :: footer">
+
 </div>
 
 </body>

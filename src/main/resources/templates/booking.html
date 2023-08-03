@@ -1,58 +1,77 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="template :: head_bootstrap">
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Book a car</title>
   <!-- Jquery Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <!-- Para hacer que el campo de fecha no permita seleccionar los domingos -->
+  <!-- To not allow sundays to be selected -->
   <script>
         $(function(){
             $('#day').on('change', function(){
-                var day = new Date($(this).val()).getDay();
+                let day = new Date($(this).val()).getDay();
                 //console.log(day);
-                // Si el día es domingo (6), limpiar el campo de fecha y mostrar un mensaje de error
+                // If sunday (6), clean date field and show error
                 if(day === 6){
                     $(this).val('');
-                    alert('No se puede seleccionar el domingo!');
+                    alert('Sorry, the garage is close on Sundays!');
                 }
             });
         });
     </script>
 </head>
+
 <body>
 
-<form action="#" th:action="@{/dobookservice}" method="post">
-  <input type="text" th:name="idClients" th:value="${user.getIdClients()}" readonly="readonly" />
+<header  th:replace="template :: header">
 
-  <label for="registrationNumber">Número de Registro:</label>
-  <select id="registrationNumber" th:name="registrationNumber" required>
-    <option th:each="vehicle : ${vehicles}" th:value="${vehicle.getRegistrationNumber()}" th:text="${vehicle.registrationNumber + ' ' +vehicle.model}"></option>
-  </select>
+</header>
+<div class="container">
+  <h1>Book a Car</h1>
+  <form action="#" th:action="@{/dobookservice}" method="post">
+    <div class="form-group">
+      <label>Client ID:</label>
+      <input type="text" th:name="idClients" th:value="${user.getIdClients()}" readonly="readonly" /> <!--To keep idClient logged-->
+    </div>
+    <div class="form-group">
+      <label for="registrationNumber">Registration Number:</label>
+      <select id="registrationNumber" th:name="registrationNumber" required>
+        <option th:each="vehicle : ${vehicles}" th:value="${vehicle.getRegistrationNumber()}" th:text="${vehicle.registrationNumber + ' ' +vehicle.model}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="day">Day:</label>
+      <input type="date" id="day" th:name="day" required />
+    </div>
+    <div class="form-group">
+      <label for="time">Time:</label>
+      <select id="time" th:name="time" required>
+      <option th:each="hour : ${hours}" th:value="${hour}" th:text="${hour}"></option>
+    </select>
+    </div>
+    <div class="form-group">
+      <label for="service">Service:</label>
+      <select id="service" th:name="service" required>
+        <th:block th:each="service : ${serviceTypes}">
+          <option th:value="${service.getIdServiceType()}" th:text="${service.getName()}"></option>
 
-  <label for="day">Día:</label>
-  <input type="date" id="day" th:name="day" required />
+        </th:block>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="extraNotes">Write something you want to tell us...</label>
+      <textarea class="form-control" id="extraNotes" th:name="extraNotes" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 
-  <label for="time">Hora:</label>
-  <select id="time" th:name="time" required>
-    <option th:each="hour : ${hours}" th:value="${hour}" th:text="${hour}"></option>
-  </select>
+  </form>
+</div>
 
-  <label for="service">Servicio:</label>
-  <select id="service" th:name="service" required>
-    <th:block th:each="service : ${serviceTypes}">
-      <option th:value="${service.getIdServiceType()}" th:text="${service.getName()}"></option>
+<div th:replace="template :: footer">
 
-    </th:block>
-  </select>
-
-  <label for="extraNotes">Notas Extra:</label>
-  <textarea id="extraNotes" th:name="extraNotes" rows="5" cols="30"></textarea>
-
-  <button type="submit">Enviar</button>
-</form>
+</div>
 
 </body>
 </html>

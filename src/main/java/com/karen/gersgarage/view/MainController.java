@@ -66,6 +66,12 @@ public class MainController {
         return "contact";
     } // Link to Contact Section
 
+    @GetMapping("/vehicleTeg")
+    public String vehicleReg() {
+        return "vehicleReg";
+    } // Link to Register a Car Section
+
+
     @GetMapping("/manageBooking")
     public String manageBooking() {
         // codigo java
