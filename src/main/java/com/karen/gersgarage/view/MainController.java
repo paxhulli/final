@@ -166,7 +166,23 @@ public class MainController {
     @PostMapping(path = "/doAddItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String doAddItem(@ModelAttribute ItemPart itemForm, Model model) {
         logger.info("En doAddItem....");
-        logger.info("Formulario: " + itemForm); //To print info messages
+        logger.info("Form: " + itemForm); //To print info messages
+        ItemPart saved = itemPartRepository.save(itemForm); //Save info from form
+        logger.info("result:" + saved);
+        model.addAttribute("saved", saved);
+        return "addItemResult";
+    }
+
+    @GetMapping("/updateItem")
+    public String updateItem(Model model){
+
+        return "updateItem";
+    }
+
+    @PostMapping(path = "/doUpdateItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String doUpdateItem(@ModelAttribute ItemPart itemForm, Model model) {
+        logger.info("En doUpdateItem....");
+        logger.info("Form: " + itemForm); //To print info messages
         ItemPart saved = itemPartRepository.save(itemForm); //Save info from form
         logger.info("result:" + saved);
         model.addAttribute("saved", saved);

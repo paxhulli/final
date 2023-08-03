@@ -35,7 +35,8 @@
             <td th:text="${item.getPrice()}"></td>
             <td th:text="${item.getStock()}"></td>
             <td>
-                <button type="button" class="btn btn-primary"><i class="bi bi-pencil-square"></i>update</button>
+
+                <a th:href="@{/updateItem}" class="btn btn-primary"><i class="bi bi-pencil-square">update</i></a>
                 <button type="button" class="btn btn-danger"><i class="bi bi-x-square">delete</i></button>
             </td>
 
