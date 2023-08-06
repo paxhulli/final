@@ -25,6 +25,6 @@ public class Client {
     private String email;
     private String password;
     private String license;
-    private int profile;
+    private String profile;
 
 }
