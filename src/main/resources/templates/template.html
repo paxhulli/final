@@ -10,7 +10,7 @@
 <body>
 <header th:fragment="header">
     <div class="p-2 bg-dark text-white text-right">
-        <p class="text-end">Hello User</p>
+        <p class="text-end" th:text="'Hello, ' + ${user?.getName() ?: 'Anonimous' } + '!'" />
         <!--<label type="text" th:name="idfirstName" th:value="${user.getfirstName()}" readonly="readonly"></label>-->
     </div>
 
@@ -33,7 +33,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/login">Log In</a></li>
-                            <li><a class="dropdown-item" href="/manageItems">Manage Items</a></li>
+                            <li><a class="dropdown-item" href="/manage/manageItems">Manage Items</a></li>
                             <li><a class="dropdown-item" href="#">Manage Services</a></li>
                             <li><a class="dropdown-item" href="#">Manage Staff</a></li>
                         </ul>
@@ -55,8 +55,8 @@
                             <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/login">Log In</a></li>
-                            <li><a class="dropdown-item" href="/vehicleReg">Register a Car</a></li>
-                            <li><a class="dropdown-item" href="/booking">Book a Service</a></li>
+                            <li><a class="dropdown-item" href="/user/vehicleReg">Register a Car</a></li>
+                            <li><a class="dropdown-item" href="/user/booking">Book a Service</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -69,9 +69,13 @@
 
 </header>
 
+
+
+
 <div class="mt-5 p-4 bg-dark text-white text-center" th:fragment="footer">
     <a class="navbar-brand">Ger's Garage® </a>
     <a class="navbar-brand text-left">Created by Karen Flores</a>
 </div>
+
 </body>
 </html>

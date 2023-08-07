@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Integer> { //Create interface that inherit CrudRepository to select, insert,etc
-
+    public Client findByEmail(String email);
 }
