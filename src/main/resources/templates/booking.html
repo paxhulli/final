@@ -30,7 +30,7 @@
 </header>
 <div class="container">
   <h2>Book a Car Service</h2>
-  <form action="#" th:action="@{/dobookservice}" method="post">
+  <form action="#" th:action="@{/user/dobookservice}" method="post">
     <div class="form-group">
       <label>Client ID:</label>
       <input type="text" th:name="idClients" th:value="${user.getIdClients()}" readonly="readonly" /> <!--To keep idClient logged-->

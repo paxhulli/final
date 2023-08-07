@@ -16,10 +16,13 @@ public class UserUserDetails implements UserDetails {
     private String name;
     private String email;
     private String password;
+    private int idClients;
+
     private List<GrantedAuthority> authorities;
 
     public UserUserDetails(Client user) {
         this.name = user.getFirstName();
+        this.idClients = user.getIdClients();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.authorities = Arrays.stream(user.getProfile().split(","))
@@ -30,6 +33,14 @@ public class UserUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getIdClients() {
+        return idClients;
     }
 
     @Override

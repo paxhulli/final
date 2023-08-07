@@ -30,7 +30,7 @@ public class MainController {
 
     @Autowired //Create object automatically
     ClientRepository clientRepository;
-    Client user;
+
     @Autowired
     VehicleRepository vehicleRepository;
 
@@ -56,20 +56,26 @@ public class MainController {
 
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
+    private UserUserDetails  checkUser(){
+        UserUserDetails user=null;
         auth = SecurityContextHolder.getContext().getAuthentication();
         logger.info("auth: " + auth);
         logger.info("auth::::-..: " + auth.getDetails().getClass().getName());
         if (auth.getPrincipal() instanceof UserUserDetails) {
             logger.info("UserUserDetails");
             logger.info("UserUserDetails: " + ((UserUserDetails) auth.getPrincipal()).getUsername());
-            model.addAttribute("user", ((UserUserDetails) auth.getPrincipal()));
+            //model.addAttribute("user", ((UserUserDetails) auth.getPrincipal()));
+            user = ((UserUserDetails) auth.getPrincipal());
         } else  {
             logger.info("No autenticado");
 
         }
+        return user;
+    }
+    @GetMapping("/")
+    public String index(Model model) {
 
+        model.addAttribute("user", checkUser());
         return "index";
     }//Link to index
 
@@ -114,20 +120,20 @@ public class MainController {
     @GetMapping("/user/vehicleReg")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String vehicleReg(Model model) {
+        UserUserDetails user = checkUser();
         model.addAttribute("makes", makeRepository.findAll());
         model.addAttribute("engineTypes", engineTypeRepository.findAll());
-        logger.info("user:" + user);
+        logger.info("Vehicle reg user:" + user);
         return "vehicleRegistration";
     }
 
     @PostMapping(path = "/user/doVehicleReg", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String doVehicleReg(@ModelAttribute RegisterVehicle vehicleForm, @ModelAttribute Client client, Model model) {
-        //logger.info("En doVehicleReg....");
-        //logger.info("Formulario: " + vehicleForm); //To print info messages
+        UserUserDetails user = checkUser();
         Vehicle saved = vehicleRepository.save(vehicleForm.getVehicle()); //Save info from form
         //logger.info("result:" + saved);
-        logger.info("user: " + user.toString());
+        logger.info("user: " + user.getUsername());
         hasVehicleRepository.save(new HasVehicle(saved.getRegistrationNumber(), user.getIdClients()));
         model.addAttribute("saved", saved);
         return "vehicleRegResult";
@@ -136,6 +142,7 @@ public class MainController {
     @GetMapping("/user/booking")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String startBooking(Model model) {
+        UserUserDetails user = checkUser();
         model.addAttribute("user", user);
         List<String> hours = new ArrayList<>();
         for (int i = 9; i < 14; i++) {
