@@ -9,6 +9,9 @@
 </head>
 <body>
 <header th:fragment="header">
+    <div class="p-2">
+        <a href="/logout">Logout</a>
+    </div>
     <div class="p-2 bg-dark text-white text-right">
         <p class="text-end" th:text="'Hello, ' + ${user?.getName() ?: 'Anonimous' } + '!'" />
         <!--<label type="text" th:name="idfirstName" th:value="${user.getfirstName()}" readonly="readonly"></label>-->
@@ -52,7 +55,7 @@
                             Clients
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+                            <li><a class="dropdown-item" href="/security/signup">Sign Up</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/login">Log In</a></li>
                             <li><a class="dropdown-item" href="/user/vehicleReg">Register a Car</a></li>

@@ -6,22 +6,27 @@
 </head>
 <body>
 <header th:replace="template :: header"></header>
+<p th:text="${item}"></p>
 <div class="container mt-3">
     <h2>Update Item</h2>
     <div class="row">
         <div class="col col-4">
-            <form action="/doUpdateItem" method="POST">
+            <form action="/manage/doUpdateItem" method="POST">
+                <div class="mb-3">
+                    <label for="idItemsParts" class="form_control">Name:</label>
+                    <input type="text" disabled="true" class="form-control" id="idItemsParts"  name="idItemsParts" th:value="${item.getIdItemsParts()}" >
+                </div>
                 <div class="mb-3">
                     <label for="name" class="form_control">Name:</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter item name" name="name">
+                    <input type="text" class="form-control" id="name" placeholder="Enter item name" name="name" th:value="${item.getName()}" >
                 </div>
                 <div class="mb-3">
                     <label for="description">Description:</label>
-                    <input type="text" class="form-control" id="description" placeholder="Enter description" name="description">
+                    <input type="text" class="form-control" id="description" placeholder="Enter description" name="description" th:value="${item.getDescription()}" >
                 </div>
                 <div class="mb-3">
                     <label for="price">Price:</label>
-                    <input type="text" class="form-control" id="price" placeholder="Enter Price" name="price">
+                    <input type="text" class="form-control" id="price" placeholder="Enter Price" name="price" th:value="${item.getPrice()}">
                 </div>
                 <div class="mb-3">
                     <label for="stock">Stock:</label>

@@ -12,7 +12,7 @@
 <div class="container">
     <h1>Items Management</h1>
 
-    <a href="/addItem" class="btn btn-primary">Add Item</a>
+    <a href="/manage/addItem" class="btn btn-primary">Add Item</a>
     <br>
 
     <table class="table">
@@ -36,7 +36,13 @@
             <td th:text="${item.getStock()}"></td>
             <td>
 
-                <a th:href="@{/updateItem}" class="btn btn-primary"><i class="bi bi-pencil-square">update</i></a>
+                <!--
+                <a th:href="@{/manage/updateItem}" class="btn btn-primary"><i class="bi bi-pencil-square">update</i></a>
+                -->
+                <form action="/manage/updateItem" method="POST">
+                    <input type="hidden" id="idItemsParts" name="idItemsParts" th:value="${item.getIdItemsParts()}">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-square">update</i></button>
+                </form>
                 <button type="button" class="btn btn-danger"><i class="bi bi-x-square">delete</i></button>
             </td>
 

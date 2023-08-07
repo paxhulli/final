@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +53,9 @@ public class MainController {
     @Autowired
     ItemPartRepository itemPartRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public MainController() {
 
     }
@@ -86,6 +90,17 @@ public class MainController {
     public String signup() {
         return "signup";
     } // Link to Sign Up Section
+
+    @PostMapping(path = "/security/doSignup", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PreAuthorize("isAnonymous()")
+    public String doSignup(@ModelAttribute Client client, Model model) {
+        logger.info("/security/doSignup client: " + client);
+        client.setProfile("ROLE_USER");
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+        Client newUser = clientRepository.save(client);
+        model.addAttribute("user", newUser);
+        return "signupResult";
+    }
 
     @GetMapping("/contact")
     @PreAuthorize("isAnonymous()")
@@ -201,10 +216,11 @@ public class MainController {
         return "addItemResult";
     }
 
-    @GetMapping("/manage/updateItem")
+    @PostMapping("/manage/updateItem")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateItem(Model model){
-
+    public String updateItem(@RequestParam Integer idItemsParts ,Model model){
+        logger.info("En updateItem...."+ idItemsParts);
+        model.addAttribute("item", itemPartRepository.findById(idItemsParts).get());
         return "updateItem";
     }
 
