@@ -235,4 +235,20 @@ public class MainController {
         return "addItemResult";
     }
 
+
+    //delete items from database
+    @PostMapping("/manage/deleteItem")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String deleteItem(@RequestParam Integer idItemsParts ,Model model){
+        logger.info("En deleteItem...."+ idItemsParts);
+        itemPartRepository.deleteById(idItemsParts);
+        return "redirect:/manage/manageItems";
+    }
+
+
+
+
+
+
+
 }

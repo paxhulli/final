@@ -1,10 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="template :: head_bootstrap">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
+
 <body>
-<p th:text="${user}"></p>
+
+<header th:replace="template :: header">
+
+</header>
+
+<!--<p th:text="${user}"></p>-->
+
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                <img src="https://cdn-icons-png.flaticon.com/512/5290/5290058.png"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Registered.</h5>
+                    <p>You have been registered with the following details:</p>
+                    <p><b>First Name:</b></p>
+                    <p th:text="${saved['firstName']}"></p>
+                    <p><b>Last Name:</b></p>
+                    <p th:text="${saved['lastName']}"></p>
+                    <p><b>Mobile Number:</b></p>
+                    <p th:text="${saved['mobileNumber']}"></p>
+                    <p><b>Email:</b></p>
+                    <p th:text="${saved['email']}"></p>
+                    <p><b>License:</b></p>
+                    <p th:text="${saved['license']}"></p>
+
+
+                    <a href="/" class="btn btn-primary">Go Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="template :: footer">
+
+</div>
+
 </body>
 </html>
+
