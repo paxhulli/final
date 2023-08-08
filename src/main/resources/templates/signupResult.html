@@ -25,15 +25,15 @@
                     <h5 class="card-title">Registered.</h5>
                     <p>You have been registered with the following details:</p>
                     <p><b>First Name:</b></p>
-                    <p th:text="${saved['firstName']}"></p>
+                    <p th:text="${newUser.getFirstName() }"></p>
                     <p><b>Last Name:</b></p>
-                    <p th:text="${saved['lastName']}"></p>
+                    <p th:text="${newUser.getLastName() }"></p>
                     <p><b>Mobile Number:</b></p>
-                    <p th:text="${saved['mobileNumber']}"></p>
+                    <p th:text="${newUser.getMobileNumber() }"></p>
                     <p><b>Email:</b></p>
-                    <p th:text="${saved['email']}"></p>
+                    <p th:text="${newUser.getEmail() }"></p>
                     <p><b>License:</b></p>
-                    <p th:text="${saved['license']}"></p>
+                    <p th:text="${newUser.getLicense() }"></p>
 
 
                     <a href="/" class="btn btn-primary">Go Home</a>

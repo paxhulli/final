@@ -38,12 +38,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception  {
         return http.csrf().disable()
+                .exceptionHandling().accessDeniedPage("/security/403")
+                .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/security/**").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/user/**","/manage/**").authenticated()
                 .and().formLogin()
+                .loginPage("/login").permitAll() // path of login form
                 .and().build();
     }
 

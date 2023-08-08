@@ -83,7 +83,11 @@ public class MainController {
         return "index";
     }//Link to index
 
-
+    @GetMapping("/login")
+    @PreAuthorize("isAnonymous()")
+    public String login() {
+        return "login";
+    } // Link to Login Section
 
     @GetMapping("/security/signup")
     @PreAuthorize("isAnonymous()")
@@ -98,8 +102,22 @@ public class MainController {
         client.setProfile("ROLE_USER");
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         Client newUser = clientRepository.save(client);
-        model.addAttribute("user", newUser);
+        if (newUser != null) {
+            model.addAttribute("message", "Success!");
+            model.addAttribute("newUser", newUser);
+        } else {
+            model.addAttribute("message", "Success!");
+            return "signupResult";
+        }
+
         return "signupResult";
+    }
+
+    @GetMapping("/security/403")
+    @PreAuthorize("permitAll()")
+    public String accessDenied() {
+        logger.info( ":_:_:_:_:_:_:_:_:403" );
+        return "403";
     }
 
     @GetMapping("/contact")
