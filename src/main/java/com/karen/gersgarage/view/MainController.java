@@ -75,7 +75,7 @@ public class MainController {
             //model.addAttribute("user", ((UserUserDetails) auth.getPrincipal()));
             user = ((UserUserDetails) auth.getPrincipal());
         } else  {
-            logger.info("No autenticado");
+            logger.info("No authenticated user");
 
         }
         return user;
@@ -93,6 +93,7 @@ public class MainController {
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()") //User must be anonymous to access this section (not logged in)
     public String login() {
+
         return "login";
     }
 
@@ -125,24 +126,29 @@ public class MainController {
     // Link to 403 Section (Access Denied)
     @GetMapping("/security/403")
     @PreAuthorize("permitAll()")
-    public String accessDenied() {
+    public String accessDenied(Model model) {
+        model.addAttribute("user", checkUser());
         logger.info( ":_:_:_:_:_:_:_:_:403" );
         return "403";
     }
 
     // Link to Contact Section
     @GetMapping("/contact")
-    @PreAuthorize("isAnonymous()")
-    public String contact() {
+    @PreAuthorize("isAnonymous() or hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')  or hasAuthority('ROLE_STAFF')")
+    public String contact(Model model) {
+        model.addAttribute("user", checkUser());
         return "contact";
     }
 
     // Link to Register a Car Section
+    /*
     @GetMapping("/user/vehicleTeg")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String vehicleReg() {
+        model.addAttribute("user", checkUser());
         return "vehicleReg";
     }
+     */
 
     // Test
     @GetMapping("/test")
@@ -160,10 +166,10 @@ public class MainController {
     @GetMapping("/user/vehicleReg")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String vehicleReg(Model model) {
-        UserUserDetails user = checkUser();
+        model.addAttribute("user", checkUser());
         model.addAttribute("makes", makeRepository.findAll());
         model.addAttribute("engineTypes", engineTypeRepository.findAll());
-        logger.info("Vehicle reg user:" + user);
+
         return "vehicleRegistration";
     }
 
@@ -177,6 +183,7 @@ public class MainController {
         logger.info("user: " + user.getUsername());
         hasVehicleRepository.save(new HasVehicle(saved.getRegistrationNumber(), user.getIdClients()));
         model.addAttribute("saved", saved);
+        model.addAttribute("user", user);
         return "vehicleRegResult";
     }
 
@@ -211,6 +218,7 @@ public class MainController {
                                 @RequestParam Integer time,
                                 @RequestParam Integer service,
                                 @RequestParam String extraNotes, Model model) {
+        model.addAttribute("user", checkUser());
         Service newService = new Service(0,service,registrationNumber,day,time,0,1,extraNotes);
         logger.info("En doBookService...." + newService);
         Service savedService =  serviceRepository.save(newService);
@@ -218,19 +226,15 @@ public class MainController {
         return "bookingresult";
     }
 
-    // Link to Manage Services Section
-    @GetMapping("/manage/manageItems")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String manageItems(Model model){
-        model.addAttribute("items", itemPartRepository.findAll());
-        return "manageItems";
-    }
+
+
+
 
     // Add Items to database
     @GetMapping("/manage/addItem")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addItem(Model model){
-
+        model.addAttribute("user", checkUser());
         return "addItem";
     }
 
@@ -238,6 +242,7 @@ public class MainController {
     @PostMapping(path = "/manage/doAddItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String doAddItem(@ModelAttribute ItemPart itemForm, Model model) {
+        model.addAttribute("user", checkUser());
         logger.info("En doAddItem....");
         logger.info("Form: " + itemForm); //To print info messages
         ItemPart saved = itemPartRepository.save(itemForm); //Save info from form
@@ -246,22 +251,39 @@ public class MainController {
         return "addItemResult";
     }
 
+    // Link to Manage Items Section
+    @GetMapping("/manage/manageItems")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String manageItems(Model model){
+        model.addAttribute("user", checkUser());
+        model.addAttribute("items", itemPartRepository.findAll());
+        return "manageItems";
+    }
+
     //update items from database
     @PostMapping("/manage/updateItem")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String updateItem(@RequestParam Integer idItemsParts ,Model model){
+        model.addAttribute("user", checkUser());
         logger.info("En updateItem...."+ idItemsParts);
         model.addAttribute("item", itemPartRepository.findById(idItemsParts).get());
         return "updateItem";
     }
 
+
+
     //update items from database in form
     @PostMapping(path = "/manage/doUpdateItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String doUpdateItem(@ModelAttribute ItemPart itemForm, Model model) {
-        logger.info("En doUpdateItem....");
+        model.addAttribute("user", checkUser());
         logger.info("Form: " + itemForm); //To print info messages
-        ItemPart saved = itemPartRepository.save(itemForm); //Save info from form
+        ItemPart toSave = itemPartRepository.findById(itemForm.getIdItemsParts()).get();
+        toSave.setName(itemForm.getName());
+        toSave.setDescription(itemForm.getDescription());
+        toSave.setPrice(itemForm.getPrice());
+        toSave.setStock(itemForm.getStock());
+        ItemPart saved = itemPartRepository.save(toSave); //Save info from form
         logger.info("result:" + saved);
         model.addAttribute("saved", saved);
         return "addItemResult";
@@ -272,6 +294,7 @@ public class MainController {
     @PostMapping("/manage/deleteItem")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteItem(@RequestParam Integer idItemsParts ,Model model){
+        model.addAttribute("user", checkUser());
         logger.info("En deleteItem...."+ idItemsParts);
         itemPartRepository.deleteById(idItemsParts);
         return "redirect:/manage/manageItems";
@@ -281,6 +304,7 @@ public class MainController {
     @GetMapping("/manage/manageServices")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String manageServices(Model model){
+        model.addAttribute("user", checkUser());
         model.addAttribute("services", serviceRepository.findAll());
         return "manageServices";
     }
@@ -289,6 +313,7 @@ public class MainController {
     @GetMapping("/manage/manageStaff")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String manageStaff(Model model){
+        model.addAttribute("user", checkUser());
         model.addAttribute("staffs", staffRepository.findAll());
         return "manageStaff";
     }

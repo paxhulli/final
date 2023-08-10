@@ -42,11 +42,14 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/").permitAll()
+                .requestMatchers("/test").permitAll()
+                .requestMatchers("/contact").permitAll()
                 .requestMatchers("/security/**").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/user/**","/manage/**").authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll() // path of login form
+                .defaultSuccessUrl("/", true)
                 .and().build();
     }
 

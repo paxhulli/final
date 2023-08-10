@@ -9,14 +9,16 @@
 
 </header>
 
+<p th:text="${item}"></p>
+
 <div class="container mt-3">
-    <h2>Update Item</h2>
+    <h2  th:text=" 'Update item:' + ${item.getIdItemsParts()}" ></h2>
     <div class="row">
         <div class="col col-4">
             <form action="/manage/doUpdateItem" method="POST">
-                <div class="mb-3">
-                    <label for="idItemsParts" class="form_control">Name:</label>
-                    <input type="text" disabled="disabled" class="form-control" id="idItemsParts" name="idItemsParts" th:value="${item.getIdItemsParts()}" >
+                <div class="mb-3 ">
+
+                    <input type="hidden"  class="form-control" id="idItemsParts" name="idItemsParts" th:value="${item.getIdItemsParts()}" >
                 </div>
                 <div class="mb-3">
                     <label for="name" class="form_control">Name:</label>

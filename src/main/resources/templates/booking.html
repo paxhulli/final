@@ -5,22 +5,9 @@
   <meta charset="UTF-8">
   <title>Book a car</title>
   <!-- Jquery Library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <!-- To not allow sundays to be selected -->
-  <script>
-        $(function(){
-            $('#day').on('change', function(){
-                let day = new Date($(this).val()).getDay();
-                //console.log(day);
-                // If sunday (6), clean date field and show error
-                if(day === 6){
-                    $(this).val('');
-                    alert('Sorry, the garage is close on Sundays!');
-                }
-            });
-        });
-    </script>
+
+
 </head>
 
 <body>
@@ -73,5 +60,19 @@
 
 </div>
 
+<!-- To not allow sundays to be selected -->
+<script>
+  $(function(){
+    $('#day').on('change', function(){
+      let day = new Date($(this).val()).getDay();
+      console.log(day);
+      // If sunday (6), clean date field and show error
+      if(day === 6){
+        $(this).val('');
+        alert('Sorry, the garage is close on Sundays!');
+      }
+    });
+  });
+</script>
 </body>
 </html>
