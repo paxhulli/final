@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 @Controller
 public class MainController {
-    Logger logger = Logger.getLogger(MainController.class.getName()); //Creating logger for actual class
+    Logger logger = Logger.getLogger(MainController.class.getName()); //Creating logger (info) for actual class
     Authentication auth;
 
     UserUserDetails userDetails;
@@ -63,6 +63,7 @@ public class MainController {
 
     }
 
+    //Check if user is logged in
     private UserUserDetails  checkUser(){
         UserUserDetails user=null;
         auth = SecurityContextHolder.getContext().getAuthentication();
@@ -79,6 +80,8 @@ public class MainController {
         }
         return user;
     }
+
+
     @GetMapping("/")
     public String index(Model model) {
 
@@ -86,25 +89,28 @@ public class MainController {
         return "index";
     }//Link to index
 
+    // Link to Login Section
     @GetMapping("/login")
-    @PreAuthorize("isAnonymous()")
+    @PreAuthorize("isAnonymous()") //User must be anonymous to access this section (not logged in)
     public String login() {
         return "login";
-    } // Link to Login Section
+    }
 
+    // Link to Sign Up Section
     @GetMapping("/security/signup")
     @PreAuthorize("isAnonymous()")
     public String signup() {
         return "signup";
-    } // Link to Sign Up Section
+    }
 
+    // Signing Up a new user
     @PostMapping(path = "/security/doSignup", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("isAnonymous()")
     public String doSignup(@ModelAttribute Client client, Model model) {
         logger.info("/security/doSignup client: " + client);
-        client.setProfile("ROLE_USER");
-        client.setPassword(passwordEncoder.encode(client.getPassword()));
-        Client newUser = clientRepository.save(client);
+        client.setProfile("ROLE_USER"); //Set profile to user
+        client.setPassword(passwordEncoder.encode(client.getPassword())); //Encode password
+        Client newUser = clientRepository.save(client); //Save new user
         if (newUser != null) {
             model.addAttribute("message", "Success!");
             model.addAttribute("newUser", newUser);
@@ -116,6 +122,7 @@ public class MainController {
         return "signupResult";
     }
 
+    // Link to 403 Section (Access Denied)
     @GetMapping("/security/403")
     @PreAuthorize("permitAll()")
     public String accessDenied() {
@@ -123,27 +130,23 @@ public class MainController {
         return "403";
     }
 
+    // Link to Contact Section
     @GetMapping("/contact")
     @PreAuthorize("isAnonymous()")
     public String contact() {
         return "contact";
-    } // Link to Contact Section
+    }
 
+    // Link to Register a Car Section
     @GetMapping("/user/vehicleTeg")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String vehicleReg() {
         return "vehicleReg";
-    } // Link to Register a Car Section
-
-
-    @GetMapping("/admin/manageBooking")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String manageBooking() {
-        // codigo java
-        return "manageBooking";
     }
 
+    // Test
     @GetMapping("/test")
+    @PreAuthorize("isAnonymous()")
     public String test(Model model) {
         logger.info("Test" + clientRepository.findAll());
 
@@ -153,6 +156,7 @@ public class MainController {
         return "test";
     }
 
+    // Register a Car
     @GetMapping("/user/vehicleReg")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String vehicleReg(Model model) {
@@ -163,6 +167,7 @@ public class MainController {
         return "vehicleRegistration";
     }
 
+    // Save a Car
     @PostMapping(path = "/user/doVehicleReg", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String doVehicleReg(@ModelAttribute RegisterVehicle vehicleForm, @ModelAttribute Client client, Model model) {
@@ -175,6 +180,7 @@ public class MainController {
         return "vehicleRegResult";
     }
 
+    // Booking a Service
     @GetMapping("/user/booking")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String startBooking(Model model) {
@@ -196,6 +202,7 @@ public class MainController {
         return "booking";
     }
 
+    // Create a Service and save it
     @PostMapping(path = "/user/dobookservice", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public String doBookService(@RequestParam String idClients,
@@ -211,6 +218,7 @@ public class MainController {
         return "bookingresult";
     }
 
+    // Link to Manage Services Section
     @GetMapping("/manage/manageItems")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String manageItems(Model model){
@@ -218,6 +226,7 @@ public class MainController {
         return "manageItems";
     }
 
+    // Add Items to database
     @GetMapping("/manage/addItem")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addItem(Model model){
@@ -225,7 +234,7 @@ public class MainController {
         return "addItem";
     }
 
-
+    // Save Items to database
     @PostMapping(path = "/manage/doAddItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String doAddItem(@ModelAttribute ItemPart itemForm, Model model) {
