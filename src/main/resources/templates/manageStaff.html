@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head_bootstrap">
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<header th:replace="template :: header">
+
+</header>
+
+<div class="container">
+  <h1>Staff Management</h1>
+
+
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Mobile Number</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <th:block th:each="staff : ${staffs}">
+        <tr>
+            <td th:text="${staff.setIdStaff()}"></td>
+            <td th:text="${staff.getFirstName()}"></td>
+            <td th:text="${staff.getLastName()}"></td>
+            <td th:text="${staff.getMobileNumber()}">
+
+      </td>
+
+      </tr>
+    </th:block>
+
+
+    </tbody>
+  </table>
+
+
+
+</div>
+
+
+<div th:replace="template :: footer">
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head_bootstrap">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="template :: header">
+
+</header>
+
+<div class="container">
+    <h1>Services Management</h1>
+
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Service Type</th>
+            <th scope="col">Registration Number</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Staff id</th>
+            <th scope="col">Extra Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <th:block th:each="service : ${services}">
+            <th scope="row" th:text="${service.getIdService()}"></th>
+            <td th:text="${service.getServiceTypeIdServiceType()}"></td>
+            <td th:text="${service.getVehiclesRegistrationNumber()}"></td>
+            <td th:text="${service.getDate()}"></td>
+            <td th:text="${service.getTime()}"></td>
+            <td th:text="${service.getStaffIdStaff()}"></td>
+            <td th:text="${service.getExtraNotes()}"></td>
+            <td>
+
+            </td>
+
+            </tr>
+        </th:block>
+
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+<div th:replace="template :: footer">
+</div>
+</body>
+</html>

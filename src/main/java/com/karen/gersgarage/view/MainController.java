@@ -56,6 +56,9 @@ public class MainController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    StaffRepository staffRepository;
+
     public MainController() {
 
     }
@@ -234,6 +237,7 @@ public class MainController {
         return "addItemResult";
     }
 
+    //update items from database
     @PostMapping("/manage/updateItem")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String updateItem(@RequestParam Integer idItemsParts ,Model model){
@@ -242,6 +246,7 @@ public class MainController {
         return "updateItem";
     }
 
+    //update items from database in form
     @PostMapping(path = "/manage/doUpdateItem", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String doUpdateItem(@ModelAttribute ItemPart itemForm, Model model) {
@@ -261,6 +266,22 @@ public class MainController {
         logger.info("En deleteItem...."+ idItemsParts);
         itemPartRepository.deleteById(idItemsParts);
         return "redirect:/manage/manageItems";
+    }
+
+    //manage services
+    @GetMapping("/manage/manageServices")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String manageServices(Model model){
+        model.addAttribute("services", serviceRepository.findAll());
+        return "manageServices";
+    }
+
+    //manage staff
+    @GetMapping("/manage/manageStaff")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String manageStaff(Model model){
+        model.addAttribute("staffs", staffRepository.findAll());
+        return "manageStaff";
     }
 
 
