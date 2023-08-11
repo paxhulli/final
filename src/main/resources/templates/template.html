@@ -35,7 +35,6 @@
                             Admin
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/login">Log In</a></li>
                             <li><a class="dropdown-item" href="/manage/manageItems">Manage Items</a></li>
                             <li><a class="dropdown-item" href="/manage/manageServices">Manage Services</a></li>
                             <li><a class="dropdown-item" href="/manage/manageStaff">Manage Staff</a></li>
@@ -46,7 +45,6 @@
                             Staff
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/login">Log In</a></li>
                             <li><a class="dropdown-item" href="#">Manage Service Status</a></li>
                         </ul>
                     </li>
@@ -55,9 +53,6 @@
                             Clients
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/security/signup">Sign Up</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/login">Log In</a></li>
                             <li><a class="dropdown-item" href="/user/vehicleReg">Register a Car</a></li>
                             <li><a class="dropdown-item" href="/user/booking">Book a Service</a></li>
                         </ul>
@@ -74,14 +69,15 @@
             </div>
             <div  class="nav-link active" sec:authorize="!isAuthenticated()">
                 <li class="nav-item" >
-                    <a class="text-left" href="/login">Login</a>
+                    <a class="text-left" href="/signup">Signup</a>
                 </li>
             </div>
             <div  class="nav-link active" sec:authorize="!isAuthenticated()">
                 <li class="nav-item" >
-                    <a class="text-left" href="/signup">Signup</a>
+                    <a class="text-left" href="/login">Login</a>
                 </li>
             </div>
+
         </div>
     </nav>
 
