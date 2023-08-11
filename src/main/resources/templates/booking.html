@@ -67,7 +67,7 @@
       let day = new Date($(this).val()).getDay();
       console.log(day);
       // If sunday (6), clean date field and show error
-      if(day === 6){
+      if(day === 0){
         $(this).val('');
         alert('Sorry, the garage is close on Sundays!');
       }
